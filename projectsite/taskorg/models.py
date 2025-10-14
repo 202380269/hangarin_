@@ -18,7 +18,6 @@ class Priority(BaseModel):
     def __str__(self):
         return self.name
 
-
 class Category(BaseModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -50,7 +49,6 @@ class Task(BaseModel):
     def __str__(self):
         return self.title
 
-
 class Note(BaseModel):
     id = models.AutoField(primary_key=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -58,7 +56,6 @@ class Note(BaseModel):
 
     def __str__(self):
         return self.content
-    
 
 class SubTask(BaseModel):
     id = models.AutoField(primary_key=True)
@@ -76,7 +73,3 @@ class SubTask(BaseModel):
 
     def __str__(self):
         return self.title
-
-
-
-# Create your models here.
