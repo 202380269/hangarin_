@@ -136,9 +136,10 @@
                         <a class="navbar-brand" href="{% url 'home' %}">{% block page_title %}Dashboard{% endblock %}</a>
                     </div>
                     <div class="collapse navbar-collapse justify-content-end">
-                        <form class="navbar-left navbar-form nav-search mr-md-3">
+                        <!-- Search Form -->
+                        <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'task-list' %}" method="get">
                             <div class="input-group search-box">
-                                <input type="text" placeholder="Search ..." class="form-control">
+                                <input type="text" placeholder="Search tasks..." class="form-control" name="q" value="{{ request.GET.q }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="la la-search search-icon"></i>
@@ -146,9 +147,10 @@
                                 </div>
                             </div>
                         </form>
+                        
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <span class="user-info">Admin Administrator</span>
+                                <span class="user-info">Hangarin Task Manager</span>
                             </li>
                         </ul>
                     </div>
