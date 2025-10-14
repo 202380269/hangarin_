@@ -139,41 +139,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/accounts/login/' 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/' 
 
-# Allauth Settings
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "optional"
-
-# Fix the redirect URLs specifically for allauth
-LOGIN_REDIRECT_URL = '/'  # After login, go to home page
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # After logout, go to home page
-
-# Social Account specific settings
-SOCIALACCOUNT_LOGIN_ON_GET = True  # Skip the confirmation page
-SOCIALACCOUNT_AUTO_SIGNUP = True   # Automatically create accounts
-SOCIALACCOUNT_STORE_TOKENS = True  # Store OAuth tokens
-
-# Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    },
-    'github': {
-        'SCOPE': [
-            'user',
-            'email',
-        ],
-    }
-}
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
+ACCOUNT_LOGOUT_ON_GET = True 
+ACCOUNT_LOGIN_METHODS = {"username", "email"} 
