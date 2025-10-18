@@ -1,9 +1,11 @@
 {% load static %}
+{% load pwa %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% progressive_web_app_meta %}
     <title>{% block title %}Hangarin - Task Manager{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
@@ -150,14 +152,73 @@
             }
         }
     </style>
+    <style>
+        /* Add splash screen animations */
+        @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+        }
+    
+        .fade-out {
+        opacity: 0 !important;
+        pointer-events: none;
+        transition: opacity 0.5s ease !important;
+        }
+    </style>
 </head>
 <body>
+    <div id="splash-screen" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+    ">
+    <img src="{% static 'img/icon-512.jpeg' %}" alt="Hangarin Icon" style="
+            width: 100px;
+            height: 100px;
+            animation: fadeIn 1s;
+    ">
+    </div>
+
+    <script>
+        // Hide splash screen - Only show on homepage
+        document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.getElementById('splash-screen');
+        
+        // Check if this is homepage (Dashboard)
+            const isHomepage = window.location.pathname === '/' || 
+                          window.location.pathname === '/home' || 
+                          window.location.pathname === '{% url "home" %}';
+        
+            if (isHomepage && splashScreen) {
+            // Show on homepage for 2 seconds
+                setTimeout(function() {
+                    splashScreen.classList.add('fade-out');
+                    setTimeout(function() {
+                        splashScreen.remove();
+                    }, 500);
+                }, 2000);
+            } else if (splashScreen) {
+                splashScreen.style.display = 'none';
+            }
+        });
+    </script>
     <div class="wrapper">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="{% url 'home' %}">Hangarin</a>
+                    <a href="{% url 'home' %}" style="display: flex; align-items: center; gap: 10px;">
+                        <img src="{% static 'img/icon-192.jpeg' %}" alt="Hangarin Icon" style="width: 30px; height: 30px;">
+                        <span>Hangarin</span>
+                    </a>
                 </div>
                 
                 <ul class="nav flex-column">
